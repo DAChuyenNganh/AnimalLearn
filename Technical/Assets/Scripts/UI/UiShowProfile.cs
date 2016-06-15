@@ -7,23 +7,30 @@ public enum eStateMove
     LEFT_TO_RIGHT = 1,
     RIGHT_TO_LEFT =2
 }
+public enum eShowType
+{
+    SHOW_PROFILE  = 0,
+    SHOW_IMAGE = 1
+}
 public class UiShowProfile : MonoBehaviour {
     [SerializeField]
     private Vector3 positionMove_root = new Vector3();
     [SerializeField]
     private Vector3 positionMove_to = new Vector3();
-    [SerializeField]
-    private Sequence sequenceLeftToRight = null;
-    private Sequence sequenceRightToLeft = null;
+
     [SerializeField]
     private const float timeMove = 0.5f;
 
     public eStateMove currStateMove = eStateMove.LEFT_TO_RIGHT;
 
     private const float distanceMove = 226;
+
+    public eShowType typeShow = eShowType.SHOW_IMAGE;
+    private ProfileImageManager profileImage;
+
+    public GameObject objTextStatusTracked;
 	// Use this for initialization
 	void Start () {
-        Debug.Log(transform.position);
         this.positionMove_root = transform.localPosition;
         if(positionMove_root.x <0)
         {
@@ -32,25 +39,30 @@ public class UiShowProfile : MonoBehaviour {
         {
             this.positionMove_to = new Vector3(positionMove_root.x - distanceMove, positionMove_root.y);
         }
-        
-        //transform.localPosition = positionMove_to;
-        
+        profileImage = gameObject.GetComponent<ProfileImageManager>();
         currStateMove = eStateMove.RIGHT_TO_LEFT;
 	}
 
-    [ContextMenu("test")]
-    public void TestPosition()
-    {
-        //StartMove();
-    }
-
+    // onclick show >>
     [ContextMenu("move")]
     public void StartMove(Transform icon)
     {
         Vector3 newLocalScale = icon.localScale;
         newLocalScale.x *= -1;
         icon.localScale = newLocalScale;
-
+        if (typeShow == eShowType.SHOW_IMAGE)
+        {
+            string currNameAnimal = GameController.Instance.GetNameAnimalCurrent();
+            if(currNameAnimal =="" && objTextStatusTracked)
+            {
+                objTextStatusTracked.SetActive(true);
+            }
+            else
+            {
+                objTextStatusTracked.SetActive(false);
+                profileImage.SetImageFromResourcesByName(currNameAnimal);
+            }
+        }
         switch(currStateMove)
         {
             case eStateMove.LEFT_TO_RIGHT:
@@ -67,6 +79,8 @@ public class UiShowProfile : MonoBehaviour {
                
                 break;
         }
+
+        
     }
 
 	// Update is called once per frame

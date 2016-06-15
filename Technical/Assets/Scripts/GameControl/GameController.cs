@@ -88,4 +88,27 @@ public class GameController : MonoSingleton<GameController> {
         //uiProfile.StartMove();  // effect move
     }
 
+    //public void ShowImageInProfile(ProfileImageManager profileImage)
+    //{
+    //    if (currObjectTracked)
+    //    {
+    //        string animalName = currObjectTracked.transform.GetChild(0).gameObject.name;
+    //        profileImage.SetImageFromResourcesByName(animalName);
+    //    }
+    //}
+
+    public string GetNameAnimalCurrent()
+    {
+        string name = "";
+        if(currObjectTracked)
+        {
+            name = currObjectTracked.transform.GetChild(0).gameObject.name;
+           
+        }
+        else
+        {
+            name = "";
+        }
+        return name;
+    }
 }
