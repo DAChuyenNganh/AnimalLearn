@@ -33,15 +33,7 @@ public class BaseAnimationManager : MonoBehaviour {
 
     void OnEnable()
     {
-        ResetAnimation();  // new cmt
-
-        //transform.position = new Vector3(3, 0, 0);
-
-        //test
-        //SetAnimationByType(_AnimationState.run);  // new code
-        //currState = _AnimationState.run;
-        //StartCoroutine("UpdateRun");
-
+        ResetAnimation();
         // set audio when tracked
         string name = gameObject.name;
         _AudioType audioType = (_AudioType)System.Enum.Parse(typeof(_AudioType),name);

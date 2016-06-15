@@ -13,9 +13,12 @@ public class GameController : MonoSingleton<GameController> {
     public GameObject imgTargetMode2;
 
     public Text txtNameAnimal;
+
+    private UiShowProfile uiProfile;
 	// Use this for initialization
 	void Start () {
         GoToMode1();
+        uiProfile = FindObjectOfType(typeof(UiShowProfile)) as UiShowProfile;
 	}
 
     public void GoToMode1()
@@ -63,7 +66,6 @@ public class GameController : MonoSingleton<GameController> {
         {
             currImgTargetParent = currObjectTracked.transform.parent.gameObject;
         }
-        
     }
 
 	// Update is called once per frame
@@ -77,25 +79,13 @@ public class GameController : MonoSingleton<GameController> {
         }
 	}
 
+    /// <summary>
+    /// show thong tin cua animal
+    /// </summary>
     [ContextMenu("test")]
     public void ShowName()
     {
-        Sequence sequence = new Sequence(new SequenceParms().Loops(1, LoopType.Yoyo));
-        Vector3 posStart = txtNameAnimal.GetComponent<RectTransform>().localPosition;
-        sequence.Append(HOTween.To(txtNameAnimal.transform,1f,new TweenParms()
-            .Prop("localPosition", new Vector3(posStart.x, posStart.y - txtNameAnimal.rectTransform.rect.height - 10, posStart.z), false)
-            ));
-        sequence.Play();
-        Invoke("CallBackShowName",2f);
+        //uiProfile.StartMove();  // effect move
     }
 
-    private void CallBackShowName()
-    {
-        Sequence sequence = new Sequence(new SequenceParms().Loops(1, LoopType.Yoyo));
-        Vector3 posStart = txtNameAnimal.GetComponent<RectTransform>().localPosition;
-        sequence.Append(HOTween.To(txtNameAnimal.transform, 1f, new TweenParms()
-            .Prop("localPosition", new Vector3(posStart.x, posStart.y + txtNameAnimal.rectTransform.rect.height + 10, posStart.z), false)
-            ));
-        sequence.Play();
-    }
 }
