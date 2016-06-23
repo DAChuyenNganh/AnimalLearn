@@ -18,12 +18,16 @@ public class AnimalInfo
     public string thongTin;
     public AnimalInfo()
     { }
-
 }
 
-public class GameData : MonoBehaviour {
+public class GameData : MonoSingleton<GameData> {
 
     public List<AnimalInfo> listAnimal;
+
+    void Awake()
+    {
+        LoadListAnimail();
+    }
 	// Use this for initialization
 
     [ContextMenu("Test Load Animal")]
@@ -35,7 +39,7 @@ public class GameData : MonoBehaviour {
      [ContextMenu("Get Animal")]
     public void GetDataLion()
     {
-        AnimalInfo lion = GetAnimalInfo("Lion");
+        AnimalInfo lion = GetAnimalInfo("LION");
         if (lion != null)
             Debug.Log("info = " + lion.thongTin);
     }

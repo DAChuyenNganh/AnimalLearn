@@ -5,8 +5,11 @@ using System.Collections.Generic;
 
 public class ProfileImageManager : MonoBehaviour {
     private Sprite[] arraySpriteAnimal;
-	// Use this for initialization
-	void Start () {
+
+    public Transform contentImg;
+    public Transform txtNoTrackable;
+    // Use this for initialization
+    void Start () {
 	    
 	}
 
@@ -14,6 +17,22 @@ public class ProfileImageManager : MonoBehaviour {
     public void Test()
     {
         SetImageFromResourcesByName("lion");
+    }
+
+    public void ShowProfileImage()
+    {
+        string animalName = GameController.Instance.GetNameAnimalCurrent();
+        if(animalName == "")
+        {
+            contentImg.gameObject.SetActive(false);
+            txtNoTrackable.gameObject.SetActive(true);
+        }
+        else
+        {
+            contentImg.gameObject.SetActive(true);
+            txtNoTrackable.gameObject.SetActive(false);
+            SetImageFromResourcesByName(animalName);
+        }
     }
 
     public void SetImageFromResourcesByName(string _animalName)

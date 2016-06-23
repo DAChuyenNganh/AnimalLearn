@@ -4,7 +4,9 @@ using UnityEngine.UI;
 using Holoville.HOTween;
 
 public class GameController : MonoSingleton<GameController> {
-    public GameObject currObjectTracked; // object nhan dien duoc hien tai
+    // object(animal) nhan dien duoc hien tai
+    public GameObject currObjectTracked; 
+    // xử dụng để set parent giữa 2 mode 
     public GameObject currImgTargetParent;
 
     public Camera cameraAR;

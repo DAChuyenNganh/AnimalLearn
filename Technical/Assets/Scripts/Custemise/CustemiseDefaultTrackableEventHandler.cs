@@ -38,6 +38,7 @@ public class CustemiseDefaultTrackableEventHandler : DefaultTrackableEventHandle
         {
             objChildAnimal.SetActive(false);
         }
+        GameController.Instance.currObjectTracked = null;
         //base.OnTrackingLost();
     }
 }
