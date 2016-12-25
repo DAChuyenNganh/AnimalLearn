@@ -1,7 +1,7 @@
 /*==============================================================================
 Copyright (c) 2010-2014 Qualcomm Connected Experiences, Inc.
 All Rights Reserved.
-Confidential and Proprietary - Qualcomm Connected Experiences, Inc.
+Confidential and Proprietary - Protected under copyright and other laws.
 ==============================================================================*/
 
 using UnityEngine;
@@ -15,20 +15,10 @@ namespace Vuforia
                                                 ITrackableEventHandler
     {
 
-        #region OVERRIDE
-        public virtual void InitGame()
-        {
-            return;
-        }
-        public virtual void UpdateGame()
-        {
-
-        }
-
-        #endregion
+        public GameObject objChildAnimal;
 
         #region PRIVATE_MEMBER_VARIABLES
-
+ 
         private TrackableBehaviour mTrackableBehaviour;
     
         #endregion // PRIVATE_MEMBER_VARIABLES
@@ -45,9 +35,19 @@ namespace Vuforia
                 mTrackableBehaviour.RegisterTrackableEventHandler(this);
             }
 
-            InitGame();
-        }
+            objChildAnimal = transform.GetChild(0).gameObject;
+            if (!objChildAnimal)
+            {
+#if UNITY_EDITOR
+                Debug.Log("thang nay khong co thang con!");
+#endif
+            }
+            else
+            {
+                objChildAnimal.SetActive(false);
+            }
 
+        }
         #endregion // UNTIY_MONOBEHAVIOUR_METHODS
 
 
@@ -74,53 +74,33 @@ namespace Vuforia
             }
         }
 
-        void Update()
-        {
-            UpdateGame();
-        }
         #endregion // PUBLIC_METHODS
+
 
 
         #region PRIVATE_METHODS
 
 
-        protected virtual void OnTrackingFound()
+        public void OnTrackingFound()
         {
-            Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
-            Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 
-            // Enable rendering:
-            foreach (Renderer component in rendererComponents)
+            if (objChildAnimal && !objChildAnimal.activeInHierarchy)
             {
-                component.enabled = true;
+                objChildAnimal.SetActive(true);
             }
-
-            // Enable colliders:
-            foreach (Collider component in colliderComponents)
-            {
-                component.enabled = true;
-            }
+            //GameController.Instance.currObjectTracked = objChildAnimal;
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
 
 
-        protected virtual void OnTrackingLost()
+        public void OnTrackingLost()
         {
-            Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
-            Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
-
-            // Disable rendering:
-            foreach (Renderer component in rendererComponents)
+            if (objChildAnimal && objChildAnimal.activeInHierarchy)
             {
-                component.enabled = false;
+                objChildAnimal.SetActive(false);
             }
-
-            // Disable colliders:
-            foreach (Collider component in colliderComponents)
-            {
-                component.enabled = false;
-            }
+            //GameController.Instance.currObjectTracked = null;
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }

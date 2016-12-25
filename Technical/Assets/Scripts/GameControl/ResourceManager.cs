@@ -19,8 +19,4 @@ public class ResourceManager : MonoSingleton<ResourceManager> {
         listSprite = Resources.LoadAll<Sprite>("imgAnimal/"+animalName);
         return listSprite;
     }
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
